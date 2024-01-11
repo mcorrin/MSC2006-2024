@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive image example</title>
+</head>
+<body>
+    <div style="width: 50%;">
+        <!-- No interactivity -->
+        <!-- <img src="svgAndImage.svg" height="400px" width="300px"/> -->
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 599.45 766.76">
+            <defs>
+            <style>
+                g.Overlays path {
+                    fill: rgba(255, 0, 0, 0.0);
+                }
+                g.Overlays text {
+                    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                }
+                g.Overlays text, g.Overlays line.leaderLine {
+                    visibility: hidden;
+                }
+                g.Overlays.over text, g.Overlays.over line.leaderLine {
+                    visibility:visible;
+                }
+                g.Overlays line.leaderLine {
+                    fill: none;
+                    stroke: #000;
+                    stroke-miterlimit: 10;
+                }
+                g.Overlays path:hover {
+                    fill: rgba(255, 0, 0, 0.3)
+                }
+            </style>
+            </defs>
+            <g id="BG">
+                <image width="1340" height="1714" transform="scale(.45)" xlink:href="images/Kidney_sketch.png"/>
+            </g>
+            <g id="Overlay1" class="Overlays">
+                <path id="Upper_Pyramid" class="cls-3" d="M188.18,417.1c-1.36-8.16-12.93-38.78-41.5-51.02s-58.5-17.01-59.18,25.51c0,25.51,.68,35.71,10.88,49.32s8.84,21.09,34.69,23.81,30.61-9.52,38.78-11.56,20.41-11.56,20.41-11.56c-2.04-13.61-4.08-24.49-4.08-24.49Z"/>
+                <line id="Leader_line" data-name="Leader line" class="leaderLine" x1="126.27" y1="396.01" x2="92.94" y2="340.9"/>
+                <text class="cls-1" transform="translate(11.63 344.9)"><tspan x="0" y="0">Upper pyramid</tspan></text>
+            </g>
+            <g id="Overlay2" class="Overlays">
+                <path id="Lower_Pyramid" class="cls-2" d="M229.67,550.43c20.41-10.88,48.3-18.37,66.67-17.01s65.99,39.46,63.27,80.95-65.31,53.06-92.52,54.42-81.63-55.1-69.39-84.35,31.97-34.01,31.97-34.01Z"/>
+                <line id="Leader_line-2" data-name="Leader line" class="leaderLine" x1="168.43" y1="683.76" x2="252.8" y2="612.33"/>
+                <text class="cls-1" transform="translate(87.5 687.76)"><tspan x="0" y="0">Lower pyramid</tspan></text>
+            </g>
+        </svg>
+    </div>
+      <script>
+        class SvgOverlay {
+            constructor($overlayGroupId) {
+                this.overlayGroup = document.querySelector("g#" + $overlayGroupId);
+                this.overlayPath = document.querySelector("g#" + $overlayGroupId + " path");
+            }
+            userOver($event) {
+                console.log("Mouse over");
+                this.overlayGroup.classList.add("over");
+            }
+            userOut($event) {
+                console.log("Mouse out");
+                this.overlayGroup.classList.remove("over");
+            }
+            activate() {
+                this.overlayGroup.addEventListener("mouseover", this.userOver.bind(this));
+                this.overlayGroup.addEventListener("mouseout", this.userOut.bind(this));
+                return this;
+            }
+        }
+        const o1 = new SvgOverlay("Overlay1").activate();
+        const o2 = new SvgOverlay("Overlay2").activate();
+      </script>
+</body>
+</html>
